@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    // 1. 스프링 부트 플러그인 추가 (버전은 3.2.4 권장)
+    id 'org.springframework.boot' version '3.2.4'
+    // 2. 의존성 버전 관리를 위한 플러그인 추가
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17' // 사용하시는 자바 버전에 맞춰주세요 (17 이상 추천)
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Web: RESTful 애플리케이션 및 내장 톰캣 지원
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Data JPA: 데이터베이스 연동 및 ORM 지원
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Spring Boot DevTools: 이제 정상 작동합니다!
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Lombok 설정
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.h2database:h2'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
