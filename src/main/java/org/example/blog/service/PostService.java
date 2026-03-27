@@ -62,4 +62,24 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         return new PostDto.Response(post);
     }
+    // 게시글 수정
+    @Transactional
+    public Long updatePost(Long id, PostDto.UpdateRequest dto) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        // 도메인(Entity) 내부에 업데이트 로직을 두는 '더티 체킹' 방식을 권장합니다.
+        post.update(dto.getTitle(), dto.getContent());
+
+        return id;
+    }
+
+    // 게시글 삭제
+    @Transactional
+    public void deletePost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        postRepository.delete(post);
+    }
 }

@@ -16,6 +16,15 @@ public class UserDto {
         private String nickname;
     }
 
+    // === 로그인 요청을 위한 DTO 추가 ===
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LoginRequest {
+        private String username;
+        private String password;
+    }
+
     @Getter
     public static class Response {
         private Long id;

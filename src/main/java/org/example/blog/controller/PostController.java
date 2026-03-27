@@ -35,4 +35,17 @@ public class PostController {
     public ResponseEntity<PostDto.Response> getPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPost(id));
     }
+
+    // 게시글 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updatePost(@PathVariable Long id, @RequestBody PostDto.UpdateRequest dto) {
+        return ResponseEntity.ok(postService.updatePost(id, dto));
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
+        return ResponseEntity.noContent().build();
+    }
 }

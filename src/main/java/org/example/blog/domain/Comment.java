@@ -56,4 +56,9 @@ public class Comment {
     private void setParent(Comment parent) {
         this.parent = parent;
     }
+
+    // 댓글 내용 수정
+    public void update(String content) {
+        this.content = content;
+    }
 }

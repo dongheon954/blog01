@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -42,4 +44,45 @@ public class CommentService {
 
         return commentRepository.save(comment).getId();
     }
+
+    // 특정 게시글의 댓글 목록 조회
+    // 수정 후 (추천)
+    public List<CommentDto.Response> getCommentsByPost(Long postId) {
+        // 최상위 댓글(parent가 null인 것)만 가져오면,
+        // DTO의 children 리스트가 하위 댓글들을 알아서 트리 구조로 엮어줍니다.
+        return commentRepository.findByPostIdAndParentIsNull(postId).stream()
+                .map(CommentDto.Response::new)
+                .toList();
+    }
+
+    // 댓글 수정
+    @Transactional
+    public Long updateComment(Long id, CommentDto.UpdateRequest dto) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. id=" + id));
+
+        // 엔티티 내부에 구현한 update 메서드를 호출 (더티 체킹)
+        comment.update(dto.getContent());
+
+        return id;
+    }
+
+    // 댓글 삭제
+    @Transactional
+    public void deleteComment(Long id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        if (!comment.getChildren().isEmpty()) {
+            // 자식(대댓글)이 있다면 데이터는 남겨두고 문구만 수정
+            comment.update("삭제된 댓글입니다.");
+        } else {
+            // 자식이 없다면 바로 삭제
+            commentRepository.delete(comment);
+        }
+    }
+
+
+
+
 }

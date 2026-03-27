@@ -2,6 +2,8 @@ package org.example.blog.repository;
 
 import org.example.blog.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Arrays;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
@@ -10,4 +12,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // 특정 유저가 쓴 댓글 목록 조회
     List<Comment> findByUserId(Long userId);
+
+    List<Comment> findByPostId(Long postId);
+
+    List<Comment> findByPostIdAndParentIsNull(Long postId);
 }

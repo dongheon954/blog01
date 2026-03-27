@@ -24,4 +24,10 @@ public class UserController {
     public ResponseEntity<UserDto.Response> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUser(id));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Long> login(@RequestBody UserDto.LoginRequest dto) {
+        Long userId = userService.login(dto.getUsername(), dto.getPassword());
+        return ResponseEntity.ok(userId);
+    }
 }
