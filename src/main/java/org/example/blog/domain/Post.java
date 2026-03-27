@@ -54,4 +54,16 @@ public class Post {
         if (this.status == null) this.status = "PUBLISHED";
         if (this.viewCount == null) this.viewCount = 0;
     }
+
+    // === 비즈니스 로직: 게시글 수정 ===
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+        // status나 category 수정이 필요하다면 여기에 추가 파라미터를 받을 수 있습니다.
+    }
+
+    // === 비즈니스 로직: 조회수 증가 ===
+    public void incrementViewCount() {
+        this.viewCount++;
+    }
 }

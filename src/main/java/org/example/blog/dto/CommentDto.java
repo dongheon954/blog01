@@ -18,6 +18,13 @@ public class CommentDto {
     }
 
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateRequest {
+        private String content;
+    }
+
+    @Getter
     public static class Response {
         private Long id;
         private String nickname;
